@@ -5,7 +5,7 @@ If you are creating a `CIImage` from a `UIImage` which originates from the photo
 
 This issue can be resolved by looking at the `imageOrientation` of the `UIImage `returned by the system, translating it from a `UIImageOrientation` to a TIFF orientation and applying that to the `CIImage`.
 
-The code to do that looks like this (where image is the supplied UIImage):
+The code to do that looks like this (where `image` is the supplied `UIImage`):
 
 ```swift
 let ciImage = CIImage(image: image)?.imageByApplyingOrientation(imageOrientationToTiffOrientation(image.imageOrientation))
