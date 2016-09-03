@@ -18,21 +18,21 @@ func imageOrientationToTiffOrientation(value: UIImageOrientation) -> Int32
 {
     switch (value)
     {
-    case UIImageOrientation.Up:
+    case .up:
         return 1
-    case UIImageOrientation.Down:
+    case .down:
         return 3
-    case UIImageOrientation.Left:
+    case .left:
         return 8
-    case UIImageOrientation.Right:
+    case .right:
         return 6
-    case UIImageOrientation.UpMirrored:
+    case .upMirrored:
         return 2
-    case UIImageOrientation.DownMirrored:
+    case .downMirrored:
         return 4
-    case UIImageOrientation.LeftMirrored:
+    case .leftMirrored:
         return 5
-    case UIImageOrientation.RightMirrored:
+    case .rightMirrored:
         return 7
     }
 }
