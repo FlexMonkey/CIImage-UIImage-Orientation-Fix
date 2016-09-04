@@ -15,7 +15,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let label = UILabel()
     
         label.text = "Touch the screen to open image picker"
-        label.textAlignment = .Center
+        label.textAlignment = .center
         
         return label
     }()
@@ -24,7 +24,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     {
         let imageView = UIImageView()
         
-        imageView.contentMode = .ScaleAspectFit
+        imageView.contentMode = .scaleAspectFit
         
         return imageView
     }()
@@ -40,41 +40,41 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         view.addSubview(label)
     }
 
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
     {
         let picker = UIImagePickerController()
         
-        picker.sourceType = .PhotoLibrary
+        picker.sourceType = .photoLibrary
         picker.delegate = self
         
-        presentViewController(picker, animated: true, completion: nil)
+        present(picker, animated: true, completion: nil)
     }
     
-    func imagePickerController(picker: UIImagePickerController,
-        didFinishPickingMediaWithInfo info: [String : AnyObject])
+    func imagePickerController(_ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [String : Any])
     {
         defer
         {
-            dismissViewControllerAnimated(true, completion: nil)
+            dismiss(animated: true, completion: nil)
         }
-
+        
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage,
-            ciImage = CIImage(image: image)?
-                .imageByApplyingOrientation(imageOrientationToTiffOrientation(image.imageOrientation))
+            let ciImage = CIImage(image: image)?
+                .applyingOrientation(imageOrientationToTiffOrientation(image.imageOrientation))
             else
         {
             return
         }
-        
+
         let pointillize = CIFilter(name: "CIPointillize",
             withInputParameters: [kCIInputImageKey: ciImage])!
         
         let ciContext = CIContext()
         let cgImage = ciContext.createCGImage(pointillize.outputImage!,
-            fromRect: pointillize.outputImage!.extent)
-        
-        imageView.image = UIImage(CGImage: cgImage)
-        label.hidden = true
+            from: pointillize.outputImage!.extent)
+
+        imageView.image = UIImage(cgImage: cgImage!)
+        label.isHidden = true
     }
     
     override func viewDidLayoutSubviews()
@@ -85,25 +85,25 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   
 }
 
-func imageOrientationToTiffOrientation(value: UIImageOrientation) -> Int32
+func imageOrientationToTiffOrientation(_ value: UIImageOrientation) -> Int32
 {
     switch (value)
     {
-    case UIImageOrientation.Up:
+    case .up:
         return 1
-    case UIImageOrientation.Down:
+    case .down:
         return 3
-    case UIImageOrientation.Left:
+    case .left:
         return 8
-    case UIImageOrientation.Right:
+    case .right:
         return 6
-    case UIImageOrientation.UpMirrored:
+    case .upMirrored:
         return 2
-    case UIImageOrientation.DownMirrored:
+    case .downMirrored:
         return 4
-    case UIImageOrientation.LeftMirrored:
+    case .leftMirrored:
         return 5
-    case UIImageOrientation.RightMirrored:
+    case .rightMirrored:
         return 7
     }
 }
